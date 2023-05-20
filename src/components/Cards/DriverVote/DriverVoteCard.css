@@ -1,0 +1,11 @@
+.driver-avatar {
+    width: 260px!important; 
+    height: 260px!important;
+}
+
+@media screen and (max-width: 768px) {
+    .driver-avatar {
+        width: 170px!important; 
+        height: 170px!important;
+    }
+}

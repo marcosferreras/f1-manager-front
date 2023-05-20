@@ -1,0 +1,86 @@
+/*!
+
+=========================================================
+* Argon Dashboard React - v1.2.2
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+import { Link } from "react-router-dom";
+// reactstrap components
+import {
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown,
+  DropdownToggle,
+  Navbar,
+  Nav,
+  Container,
+  Media
+} from "reactstrap";
+import { logout } from "services/auth/AuthService";
+import AuthContext from "services/auth/AuthContext";
+import { useContext } from "react";
+
+const PrivateNavbar = (props) => {
+  const { setAuthData } = useContext(AuthContext);
+  return (
+    <>
+      <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
+        <Container fluid>
+          <h3
+            className="h4 mb-0 text-white text-uppercase d-inline-block"
+          >
+            {props.brandText}
+          </h3>
+          <Nav className="align-items-center d-none d-md-flex" navbar>
+            <UncontrolledDropdown nav>
+              <DropdownToggle className="pr-0" nav>
+                <Media className="align-items-center">
+                  <span className="avatar avatar-sm rounded-circle">
+                    <img
+                      alt="..."
+                      src={require("../../assets/img/theme/profile.jpeg")}
+                    />
+                  </span>
+                  <Media className="ml-2 d-block">
+                    <span className="mb-0 text-sm font-weight-bold">
+                      <AuthContext.Consumer>
+                        {value => (value.authData.userName)}
+                      </AuthContext.Consumer>
+                    </span>
+                  </Media>
+                </Media>
+              </DropdownToggle>
+              <DropdownMenu className="dropdown-menu-arrow" right>
+                <DropdownItem className="noti-title" header tag="div">
+                  <h6 className="text-overflow m-0">Welcome!</h6>
+                </DropdownItem>
+                <DropdownItem to="./user-profile" tag={Link}>
+                  <i className="ni ni-single-02" />
+                  <span>My profile</span>
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem onClick={(e) => logout(setAuthData)}>
+                  <i className="ni ni-user-run" />
+                  <span>Logout</span>
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </Nav>
+        </Container>
+      </Navbar>
+    </>
+  );
+};
+
+export default PrivateNavbar;
